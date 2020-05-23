@@ -36,10 +36,13 @@ namespace UITest_Calculator
         public void PlusTwoNumbers()
         {
             _msModel.TapOnOne()
+                .TapOnFour()
+                .TapOnZero()
                 .TapOnPlus()
                 .TapOnTwo()
+                .TapOnSeven()
                 .TapOnEqual();
-            Assert.AreEqual("3", _msModel.GetTextFromTextField());
+            Assert.AreEqual("167", _msModel.GetTextFromTextField());
         }
 
         [Test]
@@ -96,6 +99,72 @@ namespace UITest_Calculator
                 .TapOnMultiply()
                 .TapOnDEL();
             Assert.AreEqual("0", _msModel.GetTextFromTextField());
+        }
+
+        [Test]
+        public void CheckCalcWithTwoOperatorsInRow()
+        {
+            _msModel.TapOnFive()
+                .TapOnNine()
+                .TapOnMultiply()
+                .TapOnMinus()
+                .TapOnNine()
+                .TapOnOne()
+                .TapOnEqual();
+            Assert.AreEqual("-32", _msModel.GetTextFromTextField());
+        }
+
+        [Test]
+        public void MultiplyByZero()
+        {
+            _msModel.TapOnEight()
+                .TapOnMultiply()
+                .TapOnZero()
+                .TapOnEqual();
+            Assert.AreEqual("0", _msModel.GetTextFromTextField());
+        }
+
+        [Test]
+        public void DivideByZero()
+        {
+            _msModel.TapOnThree()
+                .TapOnDivide()
+                .TapOnZero()
+                .TapOnEqual();
+            Assert.AreEqual("Infinity", _msModel.GetTextFromTextField());
+        }
+        
+        [Test]
+        public void CheckLongCalculation()
+        {
+            _msModel.TapOnSeven()
+                .TapOnOne()
+                .TapOnPlus()
+                .TapOnNine()
+                .TapOnFour()
+                .TapOnDivide()
+                .TapOnOne()
+                .TapOnZero()
+                .TapOnMinus()
+                .TapOnSix()
+                .TapOnEqual();
+            Assert.AreEqual("10.5", _msModel.GetTextFromTextField());
+        }
+
+        [Test]
+        public void CalculationsAfterEqual()
+        {
+            _msModel.TapOnFive()
+                .TapOnDivide()
+                .TapOnFive()
+                .TapOnEqual()
+                .TapOnMinus()
+                .TapOnFour()
+                .TapOnEqual()
+                .TapOnMultiply()
+                .TapOnNine()
+                .TapOnEqual();
+            Assert.AreEqual("-27", _msModel.GetTextFromTextField());
         }
     }
 }
